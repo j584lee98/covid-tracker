@@ -1,0 +1,10 @@
+.cont {
+  display: flex;
+  justify-content: center;
+}
+
+.cols {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: center;
+}

@@ -1,29 +1,90 @@
 import React from "react";
-import { Card, CardTitle, CardText } from "reactstrap";
+import {
+  Card,
+  CardTitle,
+  CardText,
+  Spinner,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
+import CountUp from "react-countup";
 
-const Cards = ({data: {Global, Countries, Date}}) => {
-  console.log(Global)
-  if (!Global) {
-    return "Loading data...";
-  }
+import styles from "./cards.module.css";
+
+const Cards = (props) => {
+  const {Global, Countries, date} = props.data
+  console.log(Global);
   return (
     <div>
-      <Card body inverse color="primary">
-        <CardTitle>Confirmed</CardTitle>
-        <CardText>{Global.TotalConfirmed}</CardText>
-      </Card>
-      <Card body inverse color="success">
-        <CardTitle>Recovered</CardTitle>
-        <CardText>{Global.TotalRecovered}</CardText>
-      </Card>
-      <Card body inverse color="danger">
-        <CardTitle>Active</CardTitle>
-        <CardText>{Global.TotalConfirmed - Global.TotalRecovered - Global.TotalDeaths}</CardText>
-      </Card>
-      <Card body inverse color="dark">
-        <CardTitle>Deaths</CardTitle>
-        <CardText>{Global.TotalDeaths}</CardText>
-      </Card>
+      <Container className={styles.cont}>
+        {!Global ? (
+          <Spinner style={{ width: "3rem", height: "3rem" }} />
+        ) : (
+          <Row xs="1" sm="2">
+            <Col className={styles.cols}>
+              <Card body inverse color="primary">
+                <CardTitle>Confirmed</CardTitle>
+                <h4>
+                  <CountUp
+                    start={0}
+                    end={Global.TotalConfirmed}
+                    duration={1}
+                    separator=","
+                  />
+                </h4>
+                <CardText>{new Date(date).toDateString()}</CardText>
+              </Card>
+            </Col>
+            <Col className={styles.cols}>
+              <Card body inverse color="success">
+                <CardTitle>Recovered</CardTitle>
+                <h4>
+                  <CountUp
+                    start={0}
+                    end={Global.TotalRecovered}
+                    duration={1}
+                    separator=","
+                  />
+                </h4>
+                <CardText>{new Date(date).toDateString()}</CardText>
+              </Card>
+            </Col>
+            <Col className={styles.cols}>
+              <Card body inverse color="danger">
+                <CardTitle>Active</CardTitle>
+                <h4>
+                  <CountUp
+                    start={0}
+                    end={
+                      Global.TotalConfirmed -
+                      Global.TotalRecovered -
+                      Global.TotalDeaths
+                    }
+                    duration={1}
+                    separator=","
+                  />
+                </h4>
+                <CardText>{new Date(date).toDateString()}</CardText>
+              </Card>
+            </Col>
+            <Col className={styles.cols}>
+              <Card body inverse color="dark">
+                <CardTitle>Deaths</CardTitle>
+                <h4>
+                  <CountUp
+                    start={0}
+                    end={Global.TotalDeaths}
+                    duration={1}
+                    separator=","
+                  />
+                </h4>
+                <CardText>{new Date(date).toDateString()}</CardText>
+              </Card>
+            </Col>
+          </Row>
+        )}
+      </Container>
     </div>
   );
 };
