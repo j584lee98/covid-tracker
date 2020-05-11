@@ -3,7 +3,7 @@ import React from "react";
 import Cards from "./components/cards/cards";
 import Chart from "./components/chart/chart";
 
-import { fetchSummary, fetchData } from "./api";
+import { fetchInitial, fetchSummary, fetchData } from "./api";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 
 class App extends React.Component {
@@ -13,20 +13,19 @@ class App extends React.Component {
       countries: [],
       country: "",
       province: "",
-      data: {},
+      data: [],
     };
-  }
-
-  async componentWillMount() {
-    const summary = await fetchSummary();
-    const countries = summary["Countries"].map(country => country["Country"]);
-    this.setState({ countries: countries });
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async componentDidMount() {
-    const data = await fetchData("summary");
+    const data = await fetchInitial();
     this.setState({ data: data });
-    console.log(data)
+    console.log(this.state.data)
+  }
+
+  handleChange(e) {
+    
   }
 
   render() {
@@ -35,15 +34,26 @@ class App extends React.Component {
       <div>
         <Form>
           <FormGroup>
-            <Label for="exampleSelect">Select</Label>
-            <Input type="select" name="select" id="exampleSelect">
+            <Label for="exampleSelect">Country</Label>
+            <Input type="select" name="select" id="exampleSelect" onChange={this.handleChange}>
+              <option>Global</option>
+              <option>asdf</option>
               { countries.map(country => {
                 return <option>{country}</option>
               }) }
             </Input>
           </FormGroup>
+          <FormGroup>
+            <Label for="exampleSelect">State/Province</Label>
+            <Input type="select" name="select" id="exampleSelect">
+              {/* <option>Global</option>
+              { countries.map(country => {
+                return <option>{country}</option>
+              }) } */}
+            </Input>
+          </FormGroup>
         </Form>
-        <Cards data={data} />
+        <Cards data={data ? data[0] : null} />
         <Chart />
       </div>
     );

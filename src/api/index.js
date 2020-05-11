@@ -1,6 +1,15 @@
 import axios from "axios";
 
-const url = "https://api.covid19api.com";
+const url = "https://corona-api.com";
+
+export const fetchInitial = async () => {
+  try {
+    const global = await axios.get(`${url}/timeline`);
+    return global.data.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const fetchSummary = async () => {
   try {
