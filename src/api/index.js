@@ -2,39 +2,48 @@ import axios from "axios";
 
 const url = "https://corona-api.com";
 
-export const fetchInitial = async () => {
+export const fetchGlobal = async () => {
   try {
-    const global = await axios.get(`${url}/timeline`);
-    return global.data.data;
+    const res = await axios.get(`${url}/timeline`);
+    return res.data.data;
   } catch (error) {
     console.log(error);
   }
 }
 
-export const fetchSummary = async () => {
+export const fetchCountries = async () => {
   try {
-    const summary = await axios.get(`${url}/summary`);
-    return summary.data;
+    const res = await axios.get(`${url}/countries`);
+    const countries = res.data.data.map(country => {
+      return {
+        name: country.name,
+        code: country.code
+      }
+    })
+    return countries;
   } catch (error) {
     console.log(error);
   }
 }
 
-export const fetchData = async (test) => {
+export const fetchCountry = async (code) => {
   try {
-    const {
-      data: { Global, Countries, Date },
-    } = await axios.get(`${url}/` + test);
-    return { Global, Countries, date: Date };
-  } catch (error) {}
+    const res = await axios.get(`${url}/countries/` + code);
+    const data = {
+      name: res.data.data.name,
+      timeline: res.data.data.timeline
+    };
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const fetchDailyData = async () => {
+export const fetchAll = async (code) => {
   try {
-    const response = await axios.get(`${url}/live/country/south-africa`);
-
-    console.log(response)
+    const res = await axios.get(`${url}/countries?include=timeline`);
+    return res.data.data;
   } catch (error) {
-    
+    console.log(error);
   }
-}
+};
