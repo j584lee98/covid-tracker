@@ -39,7 +39,7 @@ const Cards = (props) => {
               <Card body outline color="primary">
                 <CardTitle>Confirmed</CardTitle>
                 <h4>
-                  <span>{global.allTime && addSign(global.confirmed)}</span>
+                  <span>{!global.allTime && addSign(global.confirmed)}</span>
                   <CountUp
                     start={0}
                     end={global.confirmed}
@@ -54,7 +54,7 @@ const Cards = (props) => {
               <Card body outline color="success">
                 <CardTitle>Recovered</CardTitle>
                 <h4>
-                  <span>{addSign(global.recovered)}</span>
+                  <span>{!global.allTime && addSign(global.recovered)}</span>
                   <CountUp
                     start={0}
                     end={global.recovered}
@@ -69,7 +69,7 @@ const Cards = (props) => {
               <Card body outline color="danger">
                 <CardTitle>Active</CardTitle>
                 <h4>
-                  <span>{addSign(global.active)}</span>
+                  <span>{!global.allTime && addSign(global.active)}</span>
                   <CountUp
                     start={0}
                     end={global.active}
@@ -84,7 +84,7 @@ const Cards = (props) => {
               <Card body outline color="dark">
                 <CardTitle>Deaths</CardTitle>
                 <h4>
-                  <span>{addSign(global.deaths)}</span>
+                  <span>{!global.allTime && addSign(global.deaths)}</span>
                   <CountUp
                     start={0}
                     end={global.deaths}

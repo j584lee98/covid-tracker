@@ -26,7 +26,6 @@ class App extends React.Component {
         deaths: 0,
       },
       timeline: [],
-      ticker: 0,
     };
     this.handleForm = this.handleForm.bind(this);
     this.handleCountry = this.handleCountry.bind(this);
@@ -49,6 +48,7 @@ class App extends React.Component {
       timeline: globalData,
     });
     const countriesData = await fetchCountries();
+    countriesData.sort((a, b) => (a.name > b.name) ? 1 : -1)
     this.setState({ countries: countriesData });
   }
 
@@ -74,7 +74,6 @@ class App extends React.Component {
   async handleCountry(e) {
     this.setState({ loading: true });
     const countryData = await fetchCountry(e.target.value);
-    console.log(this.state.country.name);
     this.setState({
       loading: false,
       country: {
@@ -83,33 +82,58 @@ class App extends React.Component {
       },
       timeline: countryData.timeline,
     });
-    console.log(this.state.country.name);
+    this.handleDates();
   }
 
-  handleDates(e) {
+  handleDates() {
+    const input = document.getElementById("dates").value;
     const timeline = this.state.timeline;
-    if (e.target.value.length > 0) {
-      const start = JSON.parse(e.target.value).start;
-      const end = JSON.parse(e.target.value).end;
-      this.setState({
-        data: {
-          allTime: false,
-          confirmed: timeline[start].confirmed - timeline[end].confirmed,
-          recovered: timeline[start].recovered - timeline[end].recovered,
-          active: timeline[start].active - timeline[end].active,
-          deaths: timeline[start].deaths - timeline[end].deaths,
-        },
-      });
+    if (input.length > 0) {
+      const start = JSON.parse(input).start;
+      const end = JSON.parse(input).end;
+      if (timeline.length > 0) {
+        this.setState({
+          data: {
+            allTime: false,
+            confirmed: timeline[start].confirmed - timeline[end].confirmed,
+            recovered: timeline[start].recovered - timeline[end].recovered,
+            active: timeline[start].active - timeline[end].active,
+            deaths: timeline[start].deaths - timeline[end].deaths,
+          },
+        });
+      } else {
+        this.setState({
+          data: {
+            allTime: false,
+            confirmed: 0,
+            recovered: 0,
+            active: 0,
+            deaths: 0,
+          },
+        });
+      }
     } else {
-      this.setState({
-        data: {
-          allTime: false,
-          confirmed: timeline[0].confirmed,
-          recovered: timeline[0].recovered,
-          active: timeline[0].active,
-          deaths: timeline[0].deaths,
-        },
-      });
+      if (timeline.length > 0) {
+        this.setState({
+          data: {
+            allTime: true,
+            confirmed: timeline[0].confirmed,
+            recovered: timeline[0].recovered,
+            active: timeline[0].active,
+            deaths: timeline[0].deaths,
+          },
+        });
+      } else {
+        this.setState({
+          data: {
+            allTime: true,
+            confirmed: 0,
+            recovered: 0,
+            active: 0,
+            deaths: 0,
+          },
+        });
+      }
     }
   }
 
@@ -117,7 +141,11 @@ class App extends React.Component {
     const { countries, data } = this.state;
     return (
       <div>
-        <Form onChange={this.handleForm}>
+        <Form
+          onChange={(e) => {
+            this.handleForm(e);
+          }}
+        >
           <FormGroup>
             <Label for="country">Country</Label>
             <Input type="select" name="select" id="country">
