@@ -5,7 +5,7 @@ import styles from "./chart.module.css";
 
 const Chart = (props) => {
   const timeline = props.timeline;
-  console.log(timeline)
+  console.log(timeline);
   const lineChart = timeline.length ? (
     <Line
       data={{
@@ -35,7 +35,12 @@ const Chart = (props) => {
       }}
     />
   ) : null;
-  return <div className={styles.container}>{lineChart}</div>;
+  return (
+    <div className={styles.container}>
+      {lineChart}
+      <p className="text-muted">Source: <a href={"https://about-corona.net/"}>https://about-corona.net/</a></p>
+    </div>
+  );
 };
 
 export default Chart;
