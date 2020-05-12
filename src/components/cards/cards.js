@@ -36,7 +36,7 @@ const Cards = (props) => {
         ) : (
           <Row xs="1" sm="2">
             <Col className={styles.cols}>
-              <Card body outline color="primary">
+              <Card body inverse color="primary">
                 <CardTitle>Confirmed</CardTitle>
                 <h4>
                   <span>{!global.allTime && addSign(global.confirmed)}</span>
@@ -51,7 +51,7 @@ const Cards = (props) => {
               </Card>
             </Col>
             <Col className={styles.cols}>
-              <Card body outline color="success">
+              <Card body inverse color="success">
                 <CardTitle>Recovered</CardTitle>
                 <h4>
                   <span>{!global.allTime && addSign(global.recovered)}</span>
@@ -66,7 +66,7 @@ const Cards = (props) => {
               </Card>
             </Col>
             <Col className={styles.cols}>
-              <Card body outline color="danger">
+              <Card body inverse color="danger">
                 <CardTitle>Active</CardTitle>
                 <h4>
                   <span>{!global.allTime && addSign(global.active)}</span>
@@ -81,7 +81,7 @@ const Cards = (props) => {
               </Card>
             </Col>
             <Col className={styles.cols}>
-              <Card body outline color="dark">
+              <Card body inverse color="dark">
                 <CardTitle>Deaths</CardTitle>
                 <h4>
                   <span>{!global.allTime && addSign(global.deaths)}</span>

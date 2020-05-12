@@ -1,14 +1,17 @@
 import React from "react";
+import { Form, FormGroup, Label, Input, Navbar } from "reactstrap";
+
+import Navi from "./components/navi/navi";
 import Cards from "./components/cards/cards";
 import Chart from "./components/chart/chart";
-
 import { fetchGlobal, fetchCountries, fetchCountry } from "./api";
-import { Form, FormGroup, Label, Input } from "reactstrap";
+import "./App.css";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      time: new Date().toUTCString(),
       loading: false,
       global: {
         timeline: [],
@@ -33,6 +36,7 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
+    this.intervalID = setInterval(() => this.tick(), 1000);
     const globalData = await fetchGlobal();
     this.setState({
       global: {
@@ -48,8 +52,18 @@ class App extends React.Component {
       timeline: globalData,
     });
     const countriesData = await fetchCountries();
-    countriesData.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    countriesData.sort((a, b) => (a.name > b.name ? 1 : -1));
     this.setState({ countries: countriesData });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
+
+  tick() {
+    this.setState({
+      time: new Date().toUTCString(),
+    });
   }
 
   handleForm(e) {
@@ -138,9 +152,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { countries, data } = this.state;
+    const { data, countries, country, timeline } = this.state;
     return (
-      <div>
+      <div className="app">
+        <Navi />
+        <div className="content">
+          <Cards data={data ? data : null} />
         <Form
           onChange={(e) => {
             this.handleForm(e);
@@ -170,8 +187,10 @@ class App extends React.Component {
             </Input>
           </FormGroup>
         </Form>
-        {!this.state.loading && <Cards data={data ? data : null} />}
-        <Chart />
+        <h1>{this.state.time}</h1>
+        <h1>{country.name ? country.name : "Global"}</h1>
+        <Chart timeline={timeline ? timeline : null} />
+        </div>
       </div>
     );
   }
