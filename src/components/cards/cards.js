@@ -32,7 +32,7 @@ const Cards = (props) => {
                     separator=","
                   />
                 </h4>
-                <CardText>{new Date().toDateString()}</CardText>
+                <CardText>{new Date().toLocaleDateString()}</CardText>
               </Card>
             </Col>
             <Col className={styles.cols}>
@@ -46,7 +46,7 @@ const Cards = (props) => {
                     separator=","
                   />
                 </h4>
-                <CardText>{new Date(global.date).toDateString()}</CardText>
+                <CardText>{new Date().toLocaleDateString()}</CardText>
               </Card>
             </Col>
             <Col className={styles.cols}>
@@ -60,7 +60,7 @@ const Cards = (props) => {
                     separator=","
                   />
                 </h4>
-                <CardText>{new Date(global.date).toDateString()}</CardText>
+                <CardText>{new Date().toLocaleDateString()}</CardText>
               </Card>
             </Col>
             <Col className={styles.cols}>
@@ -74,7 +74,7 @@ const Cards = (props) => {
                     separator=","
                   />
                 </h4>
-                <CardText>{new Date(global.date).toDateString()}</CardText>
+                <CardText>{new Date().toLocaleDateString()}</CardText>
               </Card>
             </Col>
           </Row>

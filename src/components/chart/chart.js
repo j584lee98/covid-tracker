@@ -36,7 +36,7 @@ const BarChart = (props) => {
             text:
               "Update: " +
               new Date(timeline[date].updated_at).toLocaleString() +
-              (date === 0 ? " (Up-to-date)" : ""),
+              (date === 0 ? " (Most recent)" : ""),
           },
         }}
       />
@@ -50,7 +50,7 @@ const LineChart = (props) => {
     <div className={styles.chart}>
       <Line
         data={{
-          labels: timeline.map((data) => data.date).reverse(),
+          labels: timeline.map((data) => new Date(data.updated_at).toLocaleDateString()).reverse(),
           datasets: [
             {
               data: timeline.map((data) => data.confirmed).reverse(),
@@ -116,12 +116,13 @@ const Chart = (props) => {
       />
       {timeline.length > 0 ? (
         <div>
+          <button onClick={()=>console.log(new Date(timeline[timeline.length-1].date))}></button>
           <div className={styles.block}>
             <div className={styles.inner}>
               <p>From:</p>
               <DatePicker
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={(date) => console.log(date)}
                 withPortal
               />
             </div>

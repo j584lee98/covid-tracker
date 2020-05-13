@@ -112,7 +112,6 @@ class App extends React.Component {
         <ScrollableAnchor id="home">
           <div className="content">
             <h2 className="head">COVID-19 Tracker</h2>
-            {/* <div className="content"> */}
               <Label for="country">Country</Label>
               <Input
                 type="select"
@@ -129,10 +128,7 @@ class App extends React.Component {
                   );
                 })}
               </Input>
-            {/* </div> */}
-            {/* <div className="content"> */}
               <Cards data={data ? data : null} />
-            {/* </div> */}
           </div>
         </ScrollableAnchor>
         <ScrollableAnchor id="charts">
