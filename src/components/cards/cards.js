@@ -12,20 +12,6 @@ import CountUp from "react-countup";
 
 import styles from "./cards.module.css";
 
-// class Cards extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       data: props.data
-//     };
-//     console.log(props)
-//   }
-
-//   render() {
-
-const addSign = (num) => {
-  return (num > 0 ? "+" : "")
-};
 const Cards = (props) => {
   const global = props.data;
   return (
@@ -39,7 +25,6 @@ const Cards = (props) => {
               <Card body inverse color="primary">
                 <CardTitle onClick={() => console.log(global)}>Confirmed</CardTitle>
                 <h4>
-                  <span>{!global.allTime && addSign(global.confirmed)}</span>
                   <CountUp
                     start={0}
                     end={global.confirmed}
@@ -54,7 +39,6 @@ const Cards = (props) => {
               <Card body inverse color="success">
                 <CardTitle>Recovered</CardTitle>
                 <h4>
-                  <span>{!global.allTime && addSign(global.recovered)}</span>
                   <CountUp
                     start={0}
                     end={global.recovered}
@@ -69,7 +53,6 @@ const Cards = (props) => {
               <Card body inverse color="danger">
                 <CardTitle>Active</CardTitle>
                 <h4>
-                  <span>{!global.allTime && addSign(global.active)}</span>
                   <CountUp
                     start={0}
                     end={global.active}
@@ -84,7 +67,6 @@ const Cards = (props) => {
               <Card body inverse color="dark">
                 <CardTitle>Deaths</CardTitle>
                 <h4>
-                  <span>{!global.allTime && addSign(global.deaths)}</span>
                   <CountUp
                     start={0}
                     end={global.deaths}
