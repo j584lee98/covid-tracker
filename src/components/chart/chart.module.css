@@ -1,7 +1,25 @@
-.container {
-  text-align: center;
+.chart {
+  margin: 1rem auto;
 }
 
-.chart {
-  margin: 4rem auto;
+.bar {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inner {
+  width: 40%;
+}
+
+.inner p {
+  margin-bottom: 0;
+}
+
+input {
+  width: 100%;
 }

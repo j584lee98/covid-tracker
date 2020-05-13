@@ -1,6 +1,6 @@
 import React from "react";
 import { Label, Input } from "reactstrap";
-import ScrollableAnchor from "react-scrollable-anchor";
+import ScrollableAnchor, { configureAnchors } from "react-scrollable-anchor";
 
 import Navi from "./components/navi/navi";
 import Cards from "./components/cards/cards";
@@ -105,38 +105,41 @@ class App extends React.Component {
 
   render() {
     const { countries, country, data, timeline } = this.state;
+    configureAnchors({offset: -60, scrollDuration: 200});
     return (
       <div className="app">
         <Navi />
         <ScrollableAnchor id="home">
-          <h1 className="head">COVID-19 Tracker</h1>
+          <div className="content">
+            <h2 className="head">COVID-19 Tracker</h2>
+            {/* <div className="content"> */}
+              <Label for="country">Country</Label>
+              <Input
+                type="select"
+                name="select"
+                id="country"
+                onChange={this.handleInput}
+              >
+                <option>Global</option>
+                {countries.map((country, index) => {
+                  return (
+                    <option key={index} value={country.code}>
+                      {country.name}
+                    </option>
+                  );
+                })}
+              </Input>
+            {/* </div> */}
+            {/* <div className="content"> */}
+              <Cards data={data ? data : null} />
+            {/* </div> */}
+          </div>
         </ScrollableAnchor>
-        <div className="content">
-          <Label for="country">Country</Label>
-          <Input
-            type="select"
-            name="select"
-            id="country"
-            onChange={this.handleInput}
-          >
-            <option>Global</option>
-            {countries.map((country, index) => {
-              return (
-                <option key={index} value={country.code}>
-                  {country.name}
-                </option>
-              );
-            })}
-          </Input>
-        </div>
-        <div className="content">
-          <Cards data={data ? data : null} />
-        </div>
         <ScrollableAnchor id="charts">
           <div className="content">
-            <h1 className="region">
+            <h3 className="region">
               {country.name ? country.name : "Global Data"}
-            </h1>
+            </h3>
             <Chart timeline={timeline ? timeline : null} />
           </div>
         </ScrollableAnchor>

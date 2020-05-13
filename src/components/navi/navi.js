@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 
 import styles from "./navi.module.css";
-import { goToTop, goToAnchor } from "react-scrollable-anchor";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);

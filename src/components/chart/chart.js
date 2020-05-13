@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Line, Bar } from "react-chartjs-2";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./chart.module.css";
 import { FormGroup, Label, CustomInput } from "reactstrap";
+import "react-calendar/dist/Calendar.css";
 
 const BarChart = (props) => {
   const timeline = props.timeline;
@@ -33,7 +36,7 @@ const BarChart = (props) => {
             text:
               "Update: " +
               new Date(timeline[date].updated_at).toLocaleString() +
-              (date === 0 ? " (Up-to-date)" : "")
+              (date === 0 ? " (Up-to-date)" : ""),
           },
         }}
       />
@@ -74,29 +77,28 @@ const LineChart = (props) => {
       />
     </div>
   ) : null;
-  // <h4>No cases found.</h4>
 };
 
 const Chart = (props) => {
   const timeline = props.timeline;
   const [barValue, setBar] = useState(0);
-  const [lineValue, setLine] = useState(0);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     if (props.timeline.length > 0) {
       setBar(document.getElementById("bar").value);
-      setLine(document.getElementById("line").value);
     }
   }, [props.timeline.length]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <BarChart
         timeline={timeline}
         date={timeline.length - 1 - parseInt(barValue)}
       />
       {timeline.length > 0 ? (
-        <FormGroup>
+        <FormGroup className={styles.bar}>
           <Label for="bar">Report Date</Label>
           <CustomInput
             type="range"
@@ -111,21 +113,28 @@ const Chart = (props) => {
       ) : null}
       <LineChart
         timeline={timeline}
-        date={timeline.length - 1 - parseInt(lineValue)}
       />
       {timeline.length > 0 ? (
-        <FormGroup>
-          <Label for="line">Custom Range</Label>
-          <CustomInput
-            type="range"
-            id="line"
-            name="line"
-            min="0"
-            max={timeline.length - 1}
-            defaultValue={timeline.length - 1}
-            onChange={(e) => setLine(e.target.value)}
-          />
-        </FormGroup>
+        <div>
+          <div className={styles.block}>
+            <div className={styles.inner}>
+              <p>From:</p>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                withPortal
+              />
+            </div>
+            <div className={styles.inner}>
+              <p>To:</p>
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                withPortal
+              />
+            </div>
+          </div>
+        </div>
       ) : null}
       <p className="text-muted">
         Source:{" "}
