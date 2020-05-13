@@ -103,7 +103,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { data, countries, timeline } = this.state;
+    const { countries, country, data, timeline } = this.state;
     return (
       <div className="app">
         <Navi />
@@ -130,6 +130,7 @@ class App extends React.Component {
           <Cards data={data ? data : null} />
         </div>
         <div className="content">
+          <h1 className="region">{country.name ? country.name : "Global Data"}</h1>
           <Chart timeline={timeline ? timeline : null} />
         </div>
       </div>
