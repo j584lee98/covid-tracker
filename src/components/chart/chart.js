@@ -5,7 +5,6 @@ import styles from "./chart.module.css";
 
 const Chart = (props) => {
   const timeline = props.timeline;
-  console.log(timeline);
   const lineChart = timeline.length ? (
     <Line
       data={{

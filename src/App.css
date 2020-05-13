@@ -1,4 +1,13 @@
+.app {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .content {
   width: 80%;
   margin: auto;
+}
+
+.head {
+  text-align: center;
+  margin-top: 2rem;
 }

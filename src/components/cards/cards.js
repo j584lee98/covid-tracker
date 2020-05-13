@@ -37,7 +37,7 @@ const Cards = (props) => {
           <Row xs="1" sm="2">
             <Col className={styles.cols}>
               <Card body inverse color="primary">
-                <CardTitle>Confirmed</CardTitle>
+                <CardTitle onClick={() => console.log(global)}>Confirmed</CardTitle>
                 <h4>
                   <span>{!global.allTime && addSign(global.confirmed)}</span>
                   <CountUp
