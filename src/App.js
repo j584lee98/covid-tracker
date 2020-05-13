@@ -125,7 +125,11 @@ class App extends React.Component {
               );
             })}
           </Input>
+        </div>
+        <div className="content">
           <Cards data={data ? data : null} />
+        </div>
+        <div className="content">
           <Chart timeline={timeline ? timeline : null} />
         </div>
       </div>

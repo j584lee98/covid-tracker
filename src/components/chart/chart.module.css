@@ -1,3 +1,7 @@
 .container {
   text-align: center;
 }
+
+.chart {
+  margin: 4rem auto;
+}

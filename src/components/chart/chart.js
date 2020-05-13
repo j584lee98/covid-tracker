@@ -7,64 +7,70 @@ const Chart = (props) => {
   const timeline = props.timeline;
   const BarChart =
     timeline.length > 0 ? (
-      <div>
+      <div className={styles.chart}>
         <Bar
-        data={{
-          labels: ["Confirmed", "Recovered", "Active", "Deaths"],
-          datasets: [
-            {
-              label: "Current numbers",
-              data: [
-                timeline[0].confirmed,
-                timeline[0].recovered,
-                timeline[0].active,
-                timeline[0].deaths,
-              ],
-              backgroundColor: ["#007bff", "#28a745", "#dc3545", "#343a40"],
+          data={{
+            labels: ["Confirmed", "Recovered", "Active", "Deaths"],
+            datasets: [
+              {
+                label: "Current count",
+                data: [
+                  timeline[0].confirmed,
+                  timeline[0].recovered,
+                  timeline[0].active,
+                  timeline[0].deaths,
+                ],
+                backgroundColor: ["#007bff", "#28a745", "#dc3545", "#343a40"],
+              },
+            ],
+          }}
+          options={{
+            legend: { display: false },
+            title: {
+              display: true,
+              fontSize: 16,
+              text:
+                "Last Update: " +
+                new Date(timeline[0].updated_at).toLocaleString(),
             },
-          ],
-        }}
-        options={{
-          legend: { display: false },
-          title: {
-            display: true,
-            fontSize: 16,
-            text: "Last Update: " + new Date(timeline[0].updated_at).toLocaleString()
-          }
-        }}
-      />
+          }}
+        />
       </div>
-    ) : <p>asdf</p>;
+    ) : null;
   const lineChart =
     timeline.length > 0 ? (
-      <Line
-        data={{
-          labels: timeline.map((data) => data.date).reverse(),
-          datasets: [
-            {
-              data: timeline.map((data) => data.confirmed).reverse(),
-              label: "Confirmed",
-              borderColor: "#007bff",
-            },
-            {
-              data: timeline.map((data) => data.recovered).reverse(),
-              label: "Recovered",
-              borderColor: "#28a745",
-            },
-            {
-              data: timeline.map((data) => data.active).reverse(),
-              label: "Active",
-              borderColor: "#dc3545",
-            },
-            {
-              data: timeline.map((data) => data.deaths).reverse(),
-              label: "Deaths",
-              borderColor: "#343a40",
-            },
-          ],
-        }}
-      />
-    ) : null;
+      <div className={styles.chart}>
+        <Line
+          data={{
+            labels: timeline.map((data) => data.date).reverse(),
+            datasets: [
+              {
+                data: timeline.map((data) => data.confirmed).reverse(),
+                label: "Confirmed",
+                borderColor: "#007bff",
+              },
+              {
+                data: timeline.map((data) => data.recovered).reverse(),
+                label: "Recovered",
+                borderColor: "#28a745",
+              },
+              {
+                data: timeline.map((data) => data.active).reverse(),
+                label: "Active",
+                borderColor: "#dc3545",
+              },
+              {
+                data: timeline.map((data) => data.deaths).reverse(),
+                label: "Deaths",
+                borderColor: "#343a40",
+              },
+            ],
+          }}
+        />
+      </div>
+    ) : (
+      <h4>No cases found.</h4>
+    );
 
   return (
     <div className={styles.container}>

@@ -82,7 +82,6 @@ const Cards = (props) => {
       </Container>
     </div>
   );
-  // }
 };
 
 export default Cards;
