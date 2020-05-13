@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -6,13 +6,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText
-} from 'reactstrap';
+  NavLink
+} from "reactstrap";
+
+import styles from "./navi.module.css";
+import { goToTop, goToAnchor } from "react-scrollable-anchor";
 
 const Example = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,37 +18,25 @@ const Example = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <div className={styles.navi}>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">COVID-19 Tracker</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <NavLink href="#home">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#charts">Charts</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#stats">Statistics</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="https://github.com/j584lee98/covid-tracker">Source</NavLink>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
         </Collapse>
       </Navbar>
     </div>

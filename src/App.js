@@ -1,5 +1,6 @@
 import React from "react";
 import { Label, Input } from "reactstrap";
+import ScrollableAnchor from "react-scrollable-anchor";
 
 import Navi from "./components/navi/navi";
 import Cards from "./components/cards/cards";
@@ -107,7 +108,9 @@ class App extends React.Component {
     return (
       <div className="app">
         <Navi />
-        <h1 className="head">COVID-19 Tracker</h1>
+        <ScrollableAnchor id="home">
+          <h1 className="head">COVID-19 Tracker</h1>
+        </ScrollableAnchor>
         <div className="content">
           <Label for="country">Country</Label>
           <Input
@@ -129,10 +132,20 @@ class App extends React.Component {
         <div className="content">
           <Cards data={data ? data : null} />
         </div>
-        <div className="content">
-          <h1 className="region">{country.name ? country.name : "Global Data"}</h1>
-          <Chart timeline={timeline ? timeline : null} />
-        </div>
+        <ScrollableAnchor id="charts">
+          <div className="content">
+            <h1 className="region">
+              {country.name ? country.name : "Global Data"}
+            </h1>
+            <Chart timeline={timeline ? timeline : null} />
+          </div>
+        </ScrollableAnchor>
+        <ScrollableAnchor id="stats">
+          <div className="content">
+            <h1>Stats</h1>
+            <div>Content</div>
+          </div>
+        </ScrollableAnchor>
       </div>
     );
   }

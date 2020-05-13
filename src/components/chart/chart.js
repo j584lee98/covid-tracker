@@ -97,7 +97,7 @@ const Chart = (props) => {
       />
       {timeline.length > 0 ? (
         <FormGroup>
-          <Label for="bar">Custom Range</Label>
+          <Label for="bar">Report Date</Label>
           <CustomInput
             type="range"
             id="bar"
