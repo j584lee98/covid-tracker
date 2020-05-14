@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import DatePicker from "react-datepicker";
+import { FormGroup, Label, CustomInput } from "reactstrap";
 import "react-datepicker/dist/react-datepicker.css";
+import "react-calendar/dist/Calendar.css";
 
 import styles from "./chart.module.css";
-import { FormGroup, Label, CustomInput } from "reactstrap";
-import "react-calendar/dist/Calendar.css";
 
 const BarChart = (props) => {
   const timeline = props.timeline;
   const date = props.date;
+
   return timeline.length && date >= 0 ? (
     <div className={styles.chart}>
       <Bar
@@ -46,29 +47,47 @@ const BarChart = (props) => {
 
 const LineChart = (props) => {
   const timeline = props.timeline;
+  const startDate = props.start;
+  const endDate = props.end;
+
   return timeline.length > 0 ? (
     <div className={styles.chart}>
       <Line
         data={{
-          labels: timeline.map((data) => new Date(data.updated_at).toLocaleDateString()).reverse(),
+          labels: timeline.filter((update) => {
+            const compareDate = new Date(update.updated_at).setHours(0,0,0,0);
+            return compareDate >= startDate && compareDate <= endDate;
+          }).map((data) => new Date(data.updated_at).toLocaleDateString()).reverse(),
           datasets: [
             {
-              data: timeline.map((data) => data.confirmed).reverse(),
+              data: timeline.filter((update) => {
+                const compareDate = new Date(update.updated_at).setHours(0,0,0,0);
+                return compareDate >= startDate && compareDate <= endDate;
+              }).map((data) => data.confirmed).reverse(),
               label: "Confirmed",
               borderColor: "#007bff",
             },
             {
-              data: timeline.map((data) => data.recovered).reverse(),
+              data: timeline.filter((update) => {
+                const compareDate = new Date(update.updated_at).setHours(0,0,0,0);
+                return compareDate >= startDate && compareDate <= endDate;
+              }).map((data) => data.recovered).reverse(),
               label: "Recovered",
               borderColor: "#28a745",
             },
             {
-              data: timeline.map((data) => data.active).reverse(),
+              data: timeline.filter((update) => {
+                const compareDate = new Date(update.updated_at).setHours(0,0,0,0);
+                return compareDate >= startDate && compareDate <= endDate;
+              }).map((data) => data.active).reverse(),
               label: "Active",
               borderColor: "#dc3545",
             },
             {
-              data: timeline.map((data) => data.deaths).reverse(),
+              data: timeline.filter((update) => {
+                const compareDate = new Date(update.updated_at).setHours(0,0,0,0);
+                return compareDate >= startDate && compareDate <= endDate;
+              }).map((data) => data.deaths).reverse(),
               label: "Deaths",
               borderColor: "#343a40",
             },
@@ -82,14 +101,14 @@ const LineChart = (props) => {
 const Chart = (props) => {
   const timeline = props.timeline;
   const [barValue, setBar] = useState(0);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date('01/21/2020'));
   const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     if (props.timeline.length > 0) {
       setBar(document.getElementById("bar").value);
     }
-  }, [props.timeline.length]);
+  }, [endDate, props.timeline.length, startDate]);
 
   return (
     <div>
@@ -113,16 +132,17 @@ const Chart = (props) => {
       ) : null}
       <LineChart
         timeline={timeline}
+        start={new Date(startDate).setHours(0,0,0,0)}
+        end={new Date(endDate).setHours(0,0,0,0)}
       />
       {timeline.length > 0 ? (
         <div>
-          <button onClick={()=>console.log(new Date(timeline[timeline.length-1].date))}></button>
           <div className={styles.block}>
             <div className={styles.inner}>
               <p>From:</p>
               <DatePicker
                 selected={startDate}
-                onChange={(date) => console.log(date)}
+                onChange={(date) => setStartDate(date)}
                 withPortal
               />
             </div>
