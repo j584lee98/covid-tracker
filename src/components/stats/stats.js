@@ -56,7 +56,25 @@ const Stats = (props) => {
         field: "new_deaths",
         sort: "desc",
         width: 100,
-      }
+      },
+      {
+        label: ["Cases /1 mil", <FontAwesomeIcon icon={faSort} />],
+        field: "cases_per_mil",
+        sort: "desc",
+        width: 100,
+      },
+      {
+        label: ["Recovery Rate", <FontAwesomeIcon icon={faSort} />],
+        field: "recovery_rate",
+        sort: "desc",
+        width: 100,
+      },
+      {
+        label: ["Death Rate", <FontAwesomeIcon icon={faSort} />],
+        field: "death_rate",
+        sort: "desc",
+        width: 100,
+      },
     ],
     rows: dataset.map((country) => {
       const active =
@@ -72,6 +90,9 @@ const Stats = (props) => {
         critical: country.latest_data.critical,
         deaths: country.latest_data.deaths,
         new_deaths: country.today.deaths,
+        cases_per_mil: country.latest_data.calculated.cases_per_million_population,
+        recovery_rate: country.latest_data.calculated.recovery_rate ? country.latest_data.calculated.recovery_rate.toFixed(2) : null,
+        death_rate: country.latest_data.calculated.recovery_rate ? country.latest_data.calculated.death_rate.toFixed(2) : null
       };
     }),
   };
@@ -86,7 +107,7 @@ const Stats = (props) => {
           data={data}
           pagesAmount={5}
           responsive
-          paginationLabel={["<<", ">>"]}
+          paginationLabel={["Previous", "Next"]}
           order={["confirmed", "desc"]}
           entries={20}
           noBottomColumns
