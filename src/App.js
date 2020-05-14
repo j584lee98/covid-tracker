@@ -5,8 +5,9 @@ import ScrollableAnchor, { configureAnchors } from "react-scrollable-anchor";
 import Navi from "./components/navi/navi";
 import Cards from "./components/cards/cards";
 import Chart from "./components/chart/chart";
-import { fetchGlobal, fetchCountries, fetchCountry } from "./api";
+import { fetchGlobal, fetchCountries, fetchCountry, fetchRecent } from "./api";
 import "./App.css";
+import Stats from "./components/stats/stats";
 
 class App extends React.Component {
   constructor() {
@@ -26,6 +27,7 @@ class App extends React.Component {
       global: {
         timeline: [],
       },
+      recent: [],
       timeline: [],
     };
     this.handleInput = this.handleInput.bind(this);
@@ -48,6 +50,8 @@ class App extends React.Component {
     const countriesData = await fetchCountries();
     countriesData.sort((a, b) => (a.name > b.name ? 1 : -1));
     this.setState({ countries: countriesData });
+    const recentData = await fetchRecent();
+    this.setState({ recent: recentData });
   }
 
   async handleInput(e) {
@@ -104,31 +108,31 @@ class App extends React.Component {
   }
 
   render() {
-    const { countries, country, data, timeline } = this.state;
-    configureAnchors({offset: -60, scrollDuration: 200});
+    const { countries, country, data, recent, timeline } = this.state;
+    configureAnchors({ offset: -60, scrollDuration: 200 });
     return (
       <div className="app">
         <Navi />
         <ScrollableAnchor id="home">
           <div className="content">
             <h2 className="head">COVID-19 Tracker</h2>
-              <Label for="country">Country</Label>
-              <Input
-                type="select"
-                name="select"
-                id="country"
-                onChange={this.handleInput}
-              >
-                <option>Global</option>
-                {countries.map((country, index) => {
-                  return (
-                    <option key={index} value={country.code}>
-                      {country.name}
-                    </option>
-                  );
-                })}
-              </Input>
-              <Cards data={data ? data : null} />
+            <Label for="country">Country</Label>
+            <Input
+              type="select"
+              name="select"
+              id="country"
+              onChange={this.handleInput}
+            >
+              <option>Global</option>
+              {countries.map((country, index) => {
+                return (
+                  <option key={index} value={country.code}>
+                    {country.name}
+                  </option>
+                );
+              })}
+            </Input>
+            <Cards data={data ? data : null} />
           </div>
         </ScrollableAnchor>
         <ScrollableAnchor id="charts">
@@ -141,8 +145,14 @@ class App extends React.Component {
         </ScrollableAnchor>
         <ScrollableAnchor id="stats">
           <div className="content">
-            <h1>Stats</h1>
-            <div>Content</div>
+            <h3 className="stats">Global Statistics</h3>
+            <Stats recent={recent} />
+            <p className="source text-muted">
+              API source:{" "}
+              <a href={"https://about-corona.net/"}>
+                https://about-corona.net/
+              </a>
+            </p>
           </div>
         </ScrollableAnchor>
       </div>

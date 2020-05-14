@@ -3,7 +3,6 @@ import { Line, Bar } from "react-chartjs-2";
 import DatePicker from "react-datepicker";
 import { FormGroup, Label, CustomInput } from "reactstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-calendar/dist/Calendar.css";
 
 import styles from "./chart.module.css";
 
@@ -157,10 +156,6 @@ const Chart = (props) => {
           </div>
         </div>
       ) : null}
-      <p className="text-muted">
-        Source:{" "}
-        <a href={"https://about-corona.net/"}>https://about-corona.net/</a>
-      </p>
     </div>
   );
 };

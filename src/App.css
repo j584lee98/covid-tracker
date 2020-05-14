@@ -14,4 +14,15 @@
 
 .region {
   text-align: center;
+  font-weight: bold;
+}
+
+.stats {
+  text-align: center;
+  margin-top: 4rem;
+  font-weight: bold;
+}
+
+.source {
+  text-align: center;
 }

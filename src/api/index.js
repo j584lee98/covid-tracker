@@ -39,10 +39,17 @@ export const fetchCountry = async (code) => {
   }
 };
 
-export const fetchAll = async (code) => {
+export const fetchRecent = async (code) => {
   try {
-    const res = await axios.get(`${url}/countries?include=timeline`);
-    return res.data.data;
+    const res = await axios.get(`${url}/countries`);
+    const data = res.data.data.map(country => {
+      return {
+        name: country.name,
+        today: country.today,
+        latest_data: country.latest_data
+      }
+    })
+    return data;
   } catch (error) {
     console.log(error);
   }
