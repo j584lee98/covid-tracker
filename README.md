@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# COVID-19 Tracker
+
+This project is built on React and Chart.js components. [https://covid.james-lee.com/](https://covid.james-lee.com/).
 
 ## Available Scripts
 
