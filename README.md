@@ -1,6 +1,6 @@
 # COVID-19 Tracker
 
-This project is built on React and Chart.js components. [https://covid.james-lee.com/](https://covid.james-lee.com/).
+This project is built on React and Chart.js components.
 
 ## Available Scripts
 
